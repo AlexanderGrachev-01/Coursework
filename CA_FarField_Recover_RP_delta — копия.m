@@ -1,50 +1,29 @@
 clear all;
 clc;
 
-% Programm of time-space electic fields or radiation pattern calculation
-% for circular aperture measured with infinitely small zond
-
-% Программы расчета пространственно-временных электрических полей или
-% диаграммы направленности излучения для круговой апертуры, измеренной
-% с помощью бесконечно малого зонда
 
 tic
-% Design parameters
-% Конструктивные параметры
-a = 10;         % Aperture radius, m  
-                % Радиус апертуры, м
-b = 3*a;          % Radius of zond surface
-                  % Радиус поверхности зонда
 
-lam = a/10;     % Wavelength in free space
-                % Длины волны в свободном пространстве
-c = 3e+8;       % speed of light, m/sec
-                % скорость света, м/сек
+a = 10;         
+b = 3*a;         
 
-z0 = 2*a;       % Distance to zond surface
-                % Расстояние до поверхности зонда
-
+lam = a/10;     
+c = 3e+8;       
+z0 = 2*a;       
 r_int = 0:0.01:b;
 phi_int = 0:0.01:2*pi;
-
-Th = (0:0.1:10)*pi/180; % Theta angle
-                        % Тета-угол
+Th = (0:0.1:10)*pi/180; 
 N_Th = length(Th);
 
-N_FFT = 8192/4;  % Number of FFT points (should be varied for faster calculation without accuracy degradation)
-                 % Количество точек БПФ (должно быть изменено для более быстрого расчета без ухудшения точности)
-T = 200/c*(N_FFT - 1)/N_FFT;     % Time interval for FFT
-                                 % Временной интервал для БПФ
-d_t = T/(N_FFT - 1);  % Time interval for FFT
-                      % Временной интервал для БПФ
+N_FFT = 8192/4;  
+T = 200/c*(N_FFT - 1)/N_FFT;     
+d_t = T/(N_FFT - 1);  
 
 xs = r_int'*cos(phi_int);
 ys = r_int'*sin(phi_int);
 zs = z0;
-z = zs;    % Distance from observation point to aperture plane, m
-           % Расстояние от точки наблюдения до плоскости апертуры, м
-ro = r_int;    % Vector R projection to aperture plane, m
-               % Проекция вектора R на плоскость апертуры, м
+z = zs;    
+ro = r_int;   
 for i = 1:N_Th
     kx = sin(Th(i));
     ky = 0;
