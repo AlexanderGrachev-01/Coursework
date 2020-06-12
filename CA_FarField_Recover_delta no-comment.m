@@ -1,39 +1,18 @@
 clear all;
 clc;
 
-% Programm of time-space electic fields or radiation pattern calculation
-% for circular aperture measured with infinitely small zond
-
-% Программы расчета пространственно-временных электрических полей или
-% диаграммы направленности излучения для круговой апертуры, измеренной
-% с помощью бесконечно малого зонда
-
 tic
-% Design parameters
-% Конструктивные параметры
 
-a = 10;         % Aperture radius, m  
-                % Радиус апертуры, м
-b = 1*a;          % Radius of zond surface
-                  % Радиус поверхности зонда
-
-c = 3e+8;       % speed of light, m/sec
-                % скорость света, м/сек
-
-z0 = 2*a;       % Distance to zond surface
-                % Расстояние до поверхности зонда
-
+a = 10;       
+b = 1*a;    
+c = 3e+8;
+z0 = 2*a;     
 d_r = 0.01;
 r_int = 0:d_r:b;
 phi_int = 0:0.01:2*pi;
-
-Th = (8)*pi/180; % Theta angle
-                 % Тета-угол
-
-N_FFT = 8192/32;  % Number of FFT points (should be varied for faster calculation without accuracy degradation)
-                  % Количество точек БПФ (должно быть изменено для более быстрого расчета без ухудшения точности)
-T = 25/c;    % Time interval for FFT
-             % Временной интервал для БПФ
+Th = (8)*pi/180;
+N_FFT = 8192/32; 
+T = 25/c;
 d_t = T/(N_FFT - 1);с
 
 kx = sin(Th);
@@ -43,10 +22,8 @@ kz = cos(Th);
 xs = r_int'*cos(phi_int);
 ys = r_int'*sin(phi_int);
 zs = z0;
-z = zs;     % Distance from observation point to aperture plane, m
-            % Расстояние от точки наблюдения до плоскости апертуры, м
-ro = r_int;   % Vector R projection to aperture plane, m
-              % Проекция вектора R на плоскость апертуры, м
+z = zs;   
+ro = r_int;  
 
 t_in = z0/c*(1 + kz)/kz - T/2:d_t:z0/c*(1 + kz)/kz + T/2;
 t_delay = (kx*xs + kz*zs)/c;
